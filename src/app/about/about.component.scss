@@ -1,0 +1,20 @@
+.row {
+    margin-top: 70px;
+
+    .col {
+        padding: 10px;
+
+        img {
+            height:300px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        h3 {
+            margin-top: 10px;
+        }
+    }   
+}
+
+
+

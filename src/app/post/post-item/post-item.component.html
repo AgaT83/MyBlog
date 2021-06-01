@@ -1,0 +1,70 @@
+<div class="container">
+    <ng-container *ngIf="post">
+        <div [hidden]="edit">
+            <div class="row">
+                <div class="col s12">
+                    <h4>{{post.title}}</h4>
+                    <p>posted {{post.date | date:'longDate'}}</p>
+                        <div [hidden]="!post.image">
+                            <img class="responsive-img" src="{{post.image}}" alt="picture">
+                        </div>
+                    <p class="message">{{post.text}}</p>
+                    <div class="options">
+                        <button class="btn waves-effect" type="button" (click)="backToHome()">back</button>
+                        <button class="btn waves-effect" type="button" (click)="setEditMode()">edit</button>
+                        <button class="btn waves-effect" type="button" (click)="postDelete()">delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+        <div [hidden]="!edit">
+            <form class="col s12" [formGroup]="postForm" novalidate (ngSubmit)="savePost()">
+                <div class="row">
+                    <input type="text" placeholder="post title"  formControlName="title" name="title">
+                    <div class="red-text" *ngIf="postForm.get('title').touched && postForm.get('title').invalid">
+                        <div *ngIf="postForm.get('title').errors.required">
+                        Title is required!
+                        </div>
+                        <div *ngIf="postForm.get('title').errors.minlength">
+                        Title must be at least 5 characters long!
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <label>Enter picture (*required)</label>
+                    <div class = "file-field input-field">
+                        <div class = "btn">
+                        <span>Browse</span>
+                        <input type = "file">
+                        </div>
+                        <div class = "file-path-wrapper">
+                            <input class = "file-path validate" type = "text" placeholder = "Upload file">
+                        </div>
+                        <input type="file" id="file" (change)="uploadImage($event)" name="file" accept="image/*">
+                    </div> 
+                </div>
+                
+                <div [hidden]="!image">
+                    <img [src]="image">
+                </div>
+
+                <div class="row">
+                    <textarea placeholder="text" class="materialize-textarea" formControlName="text" name="content"></textarea>
+                    <div class="red-text" *ngIf="postForm.get('text').touched && postForm.get('text').invalid">
+                        <div *ngIf="postForm.get('text').errors.required">
+                        Text is required!
+                        </div>
+                        <div *ngIf="postForm.get('text').errors.minlength">
+                        Text must be at least 100 characters long!
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="options">
+                    <button class="btn waves-effect" type="submit" [disabled]="postForm.invalid||!image">save</button>
+                    <button class="btn waves-effect" type="button" (click)="edit=false" >cancel</button>
+                </div>
+            </form>
+        </div>
+</div>

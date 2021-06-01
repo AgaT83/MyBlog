@@ -1,0 +1,49 @@
+<div class="container">
+    <p class="error" *ngIf="errorMessage">{{errorMessage}}</p>
+        <form class="col s12" [formGroup]="postForm" novalidate (ngSubmit)="send();">
+            <div class="row">
+                <label>Enter the title</label>
+                <input type="text" placeholder="title"  formControlName="title" required>
+                <div class="red-text" *ngIf="title.touched && title.invalid">
+                  <div *ngIf="title.errors.required">
+                    Title is required!
+                  </div>
+                  <div *ngIf="title.errors.minlength">
+                    Title must be at least 5 characters long!
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+                <label>Enter picture (*required)</label>
+                <div class = "file-field input-field">
+                  <div class = "btn">
+                    <span>Browse</span>
+                    <input type = "file">
+                  </div>
+                  <div class = "file-path-wrapper">
+                    <input class = "file-path validate" type = "text" placeholder = "Upload file">
+                  </div>
+                  <input type="file" id="file" (change)="uploadImage($event)" name="file" accept="image/*">
+                </div>
+            </div>
+            <div [hidden]="!image">
+              <img [src]="image">
+            </div>
+            <div class="row">
+              <label>Enter the text</label>
+              <textarea placeholder="text" class="materialize-textarea" formControlName="text"></textarea>
+              <div class="red-text" *ngIf="text.touched && text.invalid">
+                <div *ngIf="text.errors.required">
+                  Text is required!
+                </div>  
+                <div *ngIf="text.errors.minlength">
+                  Text must be at least 100 characters long!
+                </div>
+              </div>
+            </div> 
+            <div class="options">
+                <button class="btn waves-effect" type="button" (click)="backToHome()">cancel</button>
+                <button class="btn waves-effect" type="submit" [disabled]="postForm.invalid||!image">add</button>
+            </div>
+        </form>
+</div> 

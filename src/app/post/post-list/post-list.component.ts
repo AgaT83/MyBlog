@@ -13,6 +13,7 @@ export class PostListComponent implements OnInit {
   errorMessage: string;
   posts: Post[];
   searchValue: string = '';
+  addLike: boolean = false;
 
   constructor(private postService: PostService) { }
 
@@ -24,8 +25,15 @@ export class PostListComponent implements OnInit {
   }
 
   addVote(post: Post){
-    post.likes += 1;
-    this.postService.updatePost(post.id, post).subscribe();
+    if(!this.addLike) {
+      post.likes += 1;
+      this.postService.updatePost(post.id, post).subscribe();
+      this.addLike = true;
+    } else {
+      post.likes -= 1;
+      this.postService.updatePost(post.id, post).subscribe();
+      this.addLike = false;
+    }
   }
 
   onEnter(event: any){

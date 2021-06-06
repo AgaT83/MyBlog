@@ -33,7 +33,7 @@ export class PostFormComponent implements OnInit {
       title: this.postForm.value.title,
       text: this.postForm.value.text,
       date: new Date(),
-      likes: null,
+      likes: 0,
       image: this.image
     };
     
